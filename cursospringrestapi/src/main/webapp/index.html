@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>TITULO PAGE</title>
+    
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+	    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E="
+	    crossorigin="anonymous"></script>
+</head>
+<body>
+	
+	<script>
+		$(document).ready(
+			function(){
+				$.ajax({
+					url:"http://localhost:8080/cursospringrestapi/usuarios/",
+					method:"GET"	
+				}).then(function(data, status, info){
+					
+				});
+			}
+		);
+	</script>
+	
+</body>
+</html>
