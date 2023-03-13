@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.ConstraintMode;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,6 +23,8 @@ import javax.persistence.UniqueConstraint;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity // JPA
 public class Usuario implements UserDetails { // interface Serializable, do java.io
 
@@ -31,8 +34,11 @@ public class Usuario implements UserDetails { // interface Serializable, do java
 	@GeneratedValue(strategy = GenerationType.AUTO) // JPA
 	private Long id;
 
+	@Column(unique=true)
 	private String login;
+
 	private String senha;
+	
 	private String nome;
 
 	// bom instanciar a lista p/ n ter erro de NullPointerException, outras
@@ -50,6 +56,16 @@ public class Usuario implements UserDetails { // interface Serializable, do java
 		inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id", table = "role", unique=false, updatable = false,
 		foreignKey = @ForeignKey(name="role_fk", value = ConstraintMode.CONSTRAINT)))
 	private List<Role> roles; //papeis/acessos
+	
+	private String token;
+	
+	public void setToken(String token) {
+		this.token = token;
+	}
+	
+	public String getToken() {
+		return token;
+	}
 	
 	public Long getId() {
 		return id;
@@ -116,31 +132,37 @@ public class Usuario implements UserDetails { // interface Serializable, do java
 		return roles;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getPassword() {
 		return this.senha;
 	}
 
+	@JsonIgnore
 	@Override
 	public String getUsername() {
 		return this.login;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isAccountNonLocked() {
 		return true;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
 	}
 
+	@JsonIgnore
 	@Override
 	public boolean isEnabled() {
 		return true;
