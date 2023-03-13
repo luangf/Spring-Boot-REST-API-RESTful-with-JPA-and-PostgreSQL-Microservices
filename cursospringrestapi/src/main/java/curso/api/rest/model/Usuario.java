@@ -34,39 +34,103 @@ public class Usuario implements UserDetails { // interface Serializable, do java
 	@GeneratedValue(strategy = GenerationType.AUTO) // JPA
 	private Long id;
 
-	@Column(unique=true)
+	@Column(unique = true)
 	private String login;
 
 	private String senha;
-	
+
 	private String nome;
 
 	// bom instanciar a lista p/ n ter erro de NullPointerException, outras
 	// coisas...
 	// orphanRemoval -> apaga os filhos
-	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY) // JPA. Um Usuario para vários Telefones, recebe vários, sendo assim List do java.util
+	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY) // JPA. Um
+																												// Usuario
+																												// para
+																												// vários
+																												// Telefones,
+																												// recebe
+																												// vários,
+																												// sendo
+																												// assim
+																												// List
+																												// do
+																												// java.util
 	private List<Telefone> telefones = new ArrayList<Telefone>(); // arraylist do java.util tbm
 
-	@OneToMany(fetch = FetchType.EAGER) //n pesa, poucos, tbm são texto, string...
-	@JoinTable(name="usuarios_role", uniqueConstraints = @UniqueConstraint(
-		columnNames = {"usuario_id", "role_id"}, name="unique_role_user"),
-		joinColumns=@JoinColumn(name="usuario_id", referencedColumnName = "id", table = "usuario", unique=false, foreignKey = @ForeignKey(name="usuario_fk",
-		value = ConstraintMode.CONSTRAINT)), 
-		
-		inverseJoinColumns = @JoinColumn(name="role_id", referencedColumnName = "id", table = "role", unique=false, updatable = false,
-		foreignKey = @ForeignKey(name="role_fk", value = ConstraintMode.CONSTRAINT)))
-	private List<Role> roles; //papeis/acessos
-	
+	@OneToMany(fetch = FetchType.EAGER) // n pesa, poucos, tbm são texto, string...
+	@JoinTable(name = "usuarios_role", uniqueConstraints = @UniqueConstraint(columnNames = { "usuario_id",
+			"role_id" }, name = "unique_role_user"), joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id", table = "usuario", unique = false, foreignKey = @ForeignKey(name = "usuario_fk", value = ConstraintMode.CONSTRAINT)),
+
+			inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id", table = "role", unique = false, updatable = false, foreignKey = @ForeignKey(name = "role_fk", value = ConstraintMode.CONSTRAINT)))
+	private List<Role> roles; // papeis/acessos
+
 	private String token;
-	
+
+	private String cep;
+
+	private String logradouro;
+	private String complemento;
+	private String bairro;
+	private String localidade;
+	private String uf;
+
+	public String getCep() {
+		return cep;
+	}
+
+	public void setCep(String cep) {
+		this.cep = cep;
+	}
+
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
 	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
 	public String getToken() {
 		return token;
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -102,11 +166,11 @@ public class Usuario implements UserDetails { // interface Serializable, do java
 	public List<Telefone> getTelefones() {
 		return telefones;
 	}
-	
+
 	public void setTelefones(List<Telefone> telefones) {
 		this.telefones = telefones;
 	}
-	
+
 	// equals and hashCode: diferenciar objetos, no caso aq por id, primary key
 
 	@Override
@@ -126,7 +190,7 @@ public class Usuario implements UserDetails { // interface Serializable, do java
 		return Objects.equals(id, other.id);
 	}
 
-	//São os acessos do usuário, ROLE_ADMIN, ROLE_VISITANTE...
+	// São os acessos do usuário, ROLE_ADMIN, ROLE_VISITANTE...
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return roles;

@@ -1,5 +1,11 @@
 package curso.api.rest.controller;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,7 +26,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
+
 import curso.api.rest.model.Usuario;
+import curso.api.rest.model.UsuarioDTO;
 import curso.api.rest.repository.UsuarioRepository;
 
 @CrossOrigin
@@ -39,9 +48,9 @@ public class IndexController {
 	@GetMapping(value = "/{id}", produces = "application/json", headers="X-API-Version=v1") //get, acessa pela url, mapear para raiz=/, parte inicial do software
 	@CacheEvict(value="cacheuser", allEntries=true)
 	@CachePut("cacheuser")
-	public ResponseEntity<Usuario> initV1(@PathVariable(value = "id") Long id) {
+	public ResponseEntity<UsuarioDTO> initV1(@PathVariable(value = "id") Long id) {
 		Optional<Usuario> usuario=usuarioRepository.findById(id);
-		return new ResponseEntity<Usuario>(usuario.get(), HttpStatus.OK);
+		return new ResponseEntity<UsuarioDTO>(new UsuarioDTO(usuario.get()), HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/{id}", produces = "application/json", headers="X-API-Version=v2") //get, acessa pela url, mapear para raiz=/, parte inicial do software
@@ -63,10 +72,34 @@ public class IndexController {
 	}
 	
 	@PostMapping(value = "/", produces = "application/json") //msm q o map seja igual pro get, se mudado no postman por exemplo, ja chama o post especifico...
-	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario){
+	public ResponseEntity<Usuario> cadastrar(@RequestBody Usuario usuario) throws Exception{
 		for(int i=0; i < usuario.getTelefones().size(); i++) {
 			usuario.getTelefones().get(i).setUsuario(usuario); //.get pq é uma List do java.util
 		}
+		
+		//Consumindo API externa pública
+		URL url=new URL("https://viacep.com.br/ws/"+usuario.getCep()+"/json/");
+		URLConnection connection=url.openConnection();
+		InputStream is=connection.getInputStream();
+		BufferedReader br=new BufferedReader(new InputStreamReader(is, "UTF-8"));
+		
+		String cep="";
+		StringBuilder jsonCep=new StringBuilder();
+		
+		while((cep=br.readLine()) != null) {
+			jsonCep.append(cep);
+		}
+		
+		Usuario userAux=new Gson().fromJson(jsonCep.toString(), Usuario.class);
+		
+		usuario.setCep(userAux.getCep());
+		usuario.setLogradouro(userAux.getLogradouro());
+		usuario.setComplemento(userAux.getComplemento());
+		usuario.setBairro(userAux.getBairro());
+		usuario.setLocalidade(userAux.getLocalidade());
+		usuario.setUf(userAux.getUf());
+		
+		//Consumindo API externa pública
 		
 		String senhaCriptografada=new BCryptPasswordEncoder().encode(usuario.getSenha());
 		usuario.setSenha(senhaCriptografada);

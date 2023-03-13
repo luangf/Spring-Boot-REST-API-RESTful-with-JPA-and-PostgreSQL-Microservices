@@ -50,6 +50,9 @@ public class JWTTokenAutenticacaoService {
 		//Adiciona no cabeçalho http
 		response.addHeader(HEADER_STTRING, token); //Authorization: Bearer 21cdsadt54tedsrgrds45gdgdsgdvd
 	
+		ApplicationContextLoad.getApplicationContext()
+		.getBean(UsuarioRepository.class).atualizaTokenUser(JWT, username);
+		
 		//Liberando resposta para portas diferentes que usam a API ou caso clientes web
 		liberacaoCors(response);
 		
@@ -62,6 +65,7 @@ public class JWTTokenAutenticacaoService {
 	public Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
 		//Pega o token enviado no cabeçalho http
 		String token=request.getHeader(HEADER_STTRING);
+		try {
 		if(token != null) {
 			
 			String tokenLimpo=token.replace(TOKEN_PREFIX, "").trim();
@@ -88,6 +92,11 @@ public class JWTTokenAutenticacaoService {
 					}
 				}
 			}
+		}//Fim condicao token
+		}catch (io.jsonwebtoken.ExpiredJwtException e) {
+			try {
+				response.getOutputStream().println("Seu token está expirado, faça o login ou informe um novo token para autenticação");
+			} catch (IOException e1) {}
 		}
 		
 		liberacaoCors(response);
