@@ -1,6 +1,6 @@
 Back-end Java application to learn: Spring Boot | REST API | PostgreSQL | Postman | Swagger | WebService ViaCep (search address) | Hikari | Spring Security | Token JWT | Cross Origin
 
-Spring Security | Token JWT:
+### Spring Security | Token JWT:
 
 Taking the authentication token by Postman, simulating a user login:
 
