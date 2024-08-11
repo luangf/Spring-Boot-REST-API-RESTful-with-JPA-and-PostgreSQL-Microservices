@@ -10,6 +10,9 @@ Sending the Bearer Token obtained through Postman's Authorization tab:
 
 ![image](https://github.com/user-attachments/assets/59c73e86-3f8d-4bf6-a61d-6026c4102f55)
 
+Saving a user via the POST method to test whether Spring Security has released it:
+
+![image](https://github.com/user-attachments/assets/df9ce676-acf5-4c27-b54d-ced89b3cfe8a)
 
 
 
