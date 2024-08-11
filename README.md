@@ -12,9 +12,7 @@ Sending the Bearer Token obtained through Postman's Authorization tab:
 
 Saving a user via the POST method to test whether Spring Security has released it:
 
-![image](https://github.com/user-attachments/assets/df9ce676-acf5-4c27-b54d-ced89b3cfe8a)
-
-
+![image](https://github.com/user-attachments/assets/39332192-b88c-48fa-a8d3-2de14753f824)
 
 ### Using Hikari to improve application performance:
 
