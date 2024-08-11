@@ -1,4 +1,4 @@
-Spring Boot | REST API | Spring Security | Token JWT | Cross Origin | PostgreSQL | Postman | Swagger | WebService ViaCep Consultar Endereço
+Back-end Java application to learn: Spring Boot | REST API | Spring Security | Token JWT | Cross Origin | PostgreSQL | Postman | Swagger | WebService ViaCep (search address)
 
 ### Using Hikari to improve application performance:
 
