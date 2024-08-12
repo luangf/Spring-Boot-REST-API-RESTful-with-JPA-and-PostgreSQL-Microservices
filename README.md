@@ -28,7 +28,7 @@ The IndexController class has the @RequestMapping("/usuario") annotation, which 
 
 By adding '/' at the end and selecting the POST method in POSTMAN, you can access the REST service created to save users:
 
-http://localhost:8080/cursospringrestapi/usuario/
+`http://localhost:8080/cursospringrestapi/usuario/`
 
 ![foto xyz](https://github.com/user-attachments/assets/91258aab-546a-465c-83c9-587df960714d)
 
