@@ -34,7 +34,7 @@ By adding '/' at the end and selecting the POST method in POSTMAN, you can acces
 
 So let's see if it works:
 
-![foto xyz2](https://github.com/user-attachments/assets/e1e10cfc-0a9b-487f-afd7-945979343b00)
+<img src="https://github.com/user-attachments/assets/e1e10cfc-0a9b-487f-afd7-945979343b00" width="200"/>
 
 It works! :D
 
