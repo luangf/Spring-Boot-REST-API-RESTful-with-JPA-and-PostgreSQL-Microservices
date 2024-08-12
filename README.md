@@ -24,7 +24,7 @@ Saving a user via the POST method to test whether Spring Security has released i
 
 The IndexController class has the @RequestMapping("/usuario") annotation, which would be the root for our RESTful methods;
 
-"http://localhost:8080/cursospringrestaupi/usuario"
+`http://localhost:8080/cursospringrestaupi/usuario`
 
 By adding '/' at the end and selecting the POST method in POSTMAN, you can access the REST service created to save users:
 
