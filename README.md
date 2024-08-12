@@ -30,7 +30,7 @@ By adding '/' at the end and selecting the POST method in POSTMAN, you can acces
 
 `http://localhost:8080/cursospringrestapi/usuario/`
 
-![foto xyz](https://github.com/user-attachments/assets/91258aab-546a-465c-83c9-587df960714d)
+![foto xyz](https://github.com/user-attachments/assets/258fd27b-acb7-4865-acd5-e47c8807719c)
 
 
 
